@@ -284,7 +284,7 @@ class MathPlus{
                         + "<a href='"
                         + "[nomath]" 
                         + text.substring(i, end-close_sym.length) 
-                        + "' target='_blank'>" 
+                        + "' rel='nofollow' target='_blank'>" 
                         + text.substring(i, end-close_sym.length) 
                         + "[/nomath]" 
                         + "</a>"
