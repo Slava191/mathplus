@@ -2,17 +2,7 @@ class MathPlus{
 
     constructor(el){
 
-            //let el = document.getElementsByTagName("mathplus")[0];
-
-            //let text = "Здесь старую строку [block]log(3)x + H_(33) + [b]I_3[/b] + vector{b} + (x^2 - (1 + sqrt(x)))/(x + 77) > 0[/block] Здесь я хочу новую староку [block](a)/(b)[/block]";
-
-            //let text = "system{[block]x^2+y^2-xy*р плюс/минус z < (r^2)/(d)[/block] ; [block](xyz)/(yzx) > 0[/block]}"  
-
-            //let text = "[youtube=https://youtu.be/USc7YHyMTUI]  ggg^(444) [block](g)/(h)[/block]"
-
             let text = el.innerHTML;
-
-            //console.log(text);
 
             let characters_for_action = {
                 "/" : this.fraction.bind(this), //Красивыя дробь
@@ -37,8 +27,6 @@ class MathPlus{
             let keys_length = keys.map((v, i, a) => v.length)
                                   .filter((v, i, a) => a.indexOf(v) === i);
 
-
-            //console.log(keys_length);
 
             //Прокручиваем строку посимвольно и ищем вхождения из characters_for_action
             //Если находим выполняем соответсвующую функцию
