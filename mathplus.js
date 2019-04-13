@@ -184,10 +184,10 @@ class MathPlus{
                             + text.substring(left_block.pos, devidend_bkt.open_bkt_pos) 
                             +"</div>"
                                 + "<div class='fraction'>"
-                                    + "<span class='top'>" //ЧИСЛИТЕЛЬ
+                                    + "<span class='numerator'>" //ЧИСЛИТЕЛЬ
                                     + text.substring(devidend_bkt.open_bkt_pos+1, devidend_bkt.close_bkt_pos) 
                                     + "</span>" 
-                                    + "<span class='bottom'>" //ЗНАМЕНАТЕЛЬ
+                                    + "<span class='denominator'>" //ЗНАМЕНАТЕЛЬ
                                     + text.substring(divider_bkt.open_bkt_pos+1, divider_bkt.close_bkt_pos)
                                     + "</span>"
                                 + "</div>"
