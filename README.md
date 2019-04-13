@@ -1,6 +1,6 @@
 # MathPlus
 
-## About
+### About
 
 Transforms math expressions into a beautiful look.
 
