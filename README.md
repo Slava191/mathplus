@@ -22,11 +22,15 @@ Insert follow code before closing tag ```</body>```
 
 ## How to use
 
-### Example
+### Example 1
+
+#### Code
 
 ```
 <mathplus>[block]logx10 + (sqrt(x+1))/(x^2) больше или равно 0[/block]</mathplus>
 ```
+
+#### Result
 
 ![alt text](example.png)
 
