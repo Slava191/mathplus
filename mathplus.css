@@ -1,0 +1,55 @@
+mathplus .numerator, mathplus .denominator {
+padding: 0 5px;    
+}
+
+mathplus .fraction {
+    margin:0 5px;
+    float:left;
+    text-align:center;
+}
+
+mathplus .near_fraction{
+    float:left;
+    margin-top:14px;
+}
+
+mathplus .numerator{
+    display: block;
+    padding-bottom:4px;
+}
+
+mathplus .denominator{
+    border-top: 1px solid #000;
+    display: block;
+    padding-top:4px;
+}
+
+mathplus .radic{
+    border-top:solid 1px black;
+}
+
+mathplus .ramka{
+background-color:white;
+box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+padding:10px; 
+border-radius:5px;
+margin:5px;
+}
+
+mathplus .vector{
+    border-top: 1px solid #000;
+}
+
+
+mathplus .systemtable{
+    font-size:16pt;
+}
+
+
+mathplus .systembkt{
+    font-size:50pt;
+}
+
+mathplus sub, mathplus sup{
+    font-size:90%;
+}
