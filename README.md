@@ -10,8 +10,8 @@ Insert follow code between <head></head>
 
 {::nomarkdown}
 
-<script src="mathplus/mathplus.js"></script>
-<link rel="stylesheet" href="mathplus/mathplus.css">
+<!--<script src="mathplus/mathplus.js"></script>
+<link rel="stylesheet" href="mathplus/mathplus.css">-->
 
 {:/}
 
