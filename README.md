@@ -22,6 +22,12 @@ Insert follow code before closing tag ```</body>```
 
 ## How to use
 
+Возведение в степень
+
+```
+<mathplus>x^(y)</mathplus>
+```
+
 ### Example 1
 
 #### Code
