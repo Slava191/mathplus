@@ -62,6 +62,44 @@ vector{x}
 [block](a)/(b)+(c)/(b) = (a+c)/(b)[/block]
 ```
 
+### Systems of two equations
+
+```
+system{x+y = 2;x-y=0}
+```
+
+### YouTube video
+
+A link to the video can be taken directly from the browser line.
+
+```
+[youtube=https://www.youtube.com/watch?v=KPcH1px3pxM] or [youtube=https://youtu.be/KPcH1px3pxM]
+```
+
+### Links
+
+```
+[link=https://github.com/Slava191/mathplus]
+```
+
+### Bold text
+
+```
+[b]Bold text[/b]
+```
+
+### Text in frame
+
+```
+[r]Text in frame[/r]
+```
+
+### Ignore mathplus
+
+```
+[nomath]x^2 - not working here[/nomath]
+```
+
 ### Example
 
 #### Code
