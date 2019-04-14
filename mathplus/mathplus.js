@@ -59,7 +59,7 @@ class MathPlus{
                 }   
             }
 
-            //Взято из старой версии mathscr без изменений!
+            //Взято из старой версии mathscr без изменений!!
             //text = text.split("-").join("&ndash;");
             text = text.split("плюс/минус").join("&plusmn;");
             text = text.split("больше или равно").join("&ge;");
