@@ -76,6 +76,12 @@ A link to the video can be taken directly from the browser line.
 [youtube=https://www.youtube.com/watch?v=KPcH1px3pxM] or [youtube=https://youtu.be/KPcH1px3pxM]
 ```
 
+### Img
+
+```
+[img=https://site.com/example.png]
+```
+
 ### Links
 
 ```
