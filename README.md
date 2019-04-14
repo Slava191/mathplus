@@ -20,20 +20,54 @@ Insert follow code before closing tag ```</body>```
 <script src="mathplus/mathplus_use.js"></script> 
 ```
 
+The text that you wish to transform with MathPlus shod be located between ```<mathplus> ... </mathplus>``` tags
+
 ## How to use
 
-Возведение в степень
+### Exponentiation
 
 ```
 x^(y)
 ```
 
-### Example 1
+### Bottom index
+
+```
+x_(y)
+```
+
+### Square root
+
+```
+sqrt(x)
+```
+
+### Base of logarithms
+
+```
+log(x) 10
+```
+
+### Vector arrow
+
+```
+vector{x}
+```
+
+### Fractions
+
+**!!! use the ```[block][/block]``` in the line where the fraction is placed**
+
+```
+[block](a)/(b)+(c)/(b) = (a+c)/(b)[/block]
+```
+
+### Example
 
 #### Code
 
 ```
-<mathplus>[block]logx10 + (sqrt(x+1))/(x^2) больше или равно 0[/block]</mathplus>
+<mathplus>[block]logx10 + (sqrt(x+1))/(x^2) = 0[/block]</mathplus>
 ```
 
 #### Result
