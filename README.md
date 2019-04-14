@@ -25,7 +25,7 @@ Insert follow code before closing tag ```</body>```
 Возведение в степень
 
 ```
-<mathplus>x^(y)</mathplus>
+x^(y)
 ```
 
 ### Example 1
