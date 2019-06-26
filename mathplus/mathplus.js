@@ -477,3 +477,11 @@ class MathPlus{
 
 
 }
+
+
+(function(){
+    let use_script = document.createElement('script');
+    use_script.src = "mathplus/mathplus_use.js";
+    use_script.setAttribute("defer", "");
+    document.getElementsByTagName('head')[0].appendChild(use_script);
+})();
