@@ -2,6 +2,9 @@ class MathPlus{
 
     constructor(el){
 
+            this.include_mathjax("https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=default");
+            this.include_css();
+
             let text = el.innerHTML;
 
             let characters_for_action = {
@@ -12,6 +15,7 @@ class MathPlus{
                 "_" : this.subscript.bind(this), //Нижний индекс
                 "[b]" : this.replacingMyTags.bind(this, "[b]", "[/b]", "<b>", "</b>"),
                 "[r]" : this.replacingMyTags.bind(this, "[r]", "[/r]", "<div class=ramka>", "</div>"),
+                "[m]" : this.replacingMyTags.bind(this, "[m]", "[/m]", "[nomath][m]", "[/m][/nomath]"),
                 "[link=" : this.replacingMyTags.bind(this, "[link=", "]", "<a href=", ">ссылка</a>"),
                 "[img=" : this.replacingMyTags.bind(this, "[img=", "]", "<img src='", "'>"),
                 "vector{" : this.replacingMyTags.bind(this, "vector{", "}", "<span class=vector>", "</span>"),
@@ -84,6 +88,24 @@ class MathPlus{
 
             el.innerHTML = text
 
+    }
+
+    include_mathjax() {
+        let script = document.createElement('script');
+        script.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=default";
+        document.getElementsByTagName('head')[0].appendChild(script);
+        let script_config = document.createElement('script');
+        script_config.type = "text/x-mathjax-config";
+        script_config.innerText = "MathJax.Hub.Config({tex2jax: {inlineMath: [['[m]','[/m]']],displayMath: []}});";
+        document.getElementsByTagName('head')[0].appendChild(script_config);
+    }
+
+    include_css(){
+        let style = document.createElement('style');
+        style.type = "text/css";
+        //link.href = "mathplus/mathplus.css";
+        style.innerText = "mathplus .numerator, mathplus .denominator {padding: 0 5px; }mathplus .fraction { margin:0 5px; float:left; text-align:center;}mathplus .near_fraction{ float:left; margin-top:14px;}mathplus .numerator{ display: block; padding-bottom:4px;}mathplus .denominator{ border-top: 1px solid #000; display: block; padding-top:4px;}mathplus .radic{ border-top:solid 1px black;}mathplus .ramka{background-color:white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);padding:10px; border-radius:5px;margin:5px;}mathplus .vector{ border-top: 1px solid #000;}mathplus .systemtable{ font-size:16pt;}mathplus .systembkt{ font-size:50pt;}mathplus sub, mathplus sup{ font-size:80%;}";
+        document.getElementsByTagName('head')[0].appendChild(style);
     }
 
     //Красивое деление
