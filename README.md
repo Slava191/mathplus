@@ -1,5 +1,7 @@
 # MathPlus
 
+# It's not actual info! 26.06.2019
+
 ### About
 
 Transforms math expressions into a beautiful look.
