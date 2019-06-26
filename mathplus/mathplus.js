@@ -79,6 +79,9 @@ class MathPlus{
             text = text.split("ТЕТА").join("&theta;");
             text = text.split("epsilon").join("&epsilon;");
 
+            text = text.split("[block]").join("");
+            text = text.split("[/block]").join("");
+
             el.innerHTML = text
 
     }
@@ -112,7 +115,9 @@ class MathPlus{
                         break;
                     }
 
-                }    
+                } 
+                
+                console.log("работаю")
 
             }
 
@@ -166,7 +171,7 @@ class MathPlus{
             //Если [block] не найден - красивое деление НЕ ОФОРМЛЯЕТСЯ
 
             if(left_block.flag === true && right_block.flag === true){
-                text =   text.substring(0, left_block.pos-left_block.tag.length)
+                text =   text.substring(0, left_block.pos) //text.substring(0, left_block.pos-left_block.tag.length)
                         +"<div>"
                             +"<div class='near_fraction'>"
                             + text.substring(left_block.pos, devidend_bkt.open_bkt_pos) 
@@ -180,7 +185,7 @@ class MathPlus{
                                     + "</span>"
                                 + "</div>"
                             +"<div class='near_fraction'>"
-                            + text.substring(divider_bkt.close_bkt_pos+1, right_block.pos-right_block.tag.length)
+                            + text.substring(divider_bkt.close_bkt_pos+1, right_block.pos) //text.substring(divider_bkt.close_bkt_pos+1, right_block.pos-right_block.tag.length)
                             +"</div>"
                             +"<div style='clear:both;'></div>"
                         +"</div>"
