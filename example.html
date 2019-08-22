@@ -21,13 +21,58 @@
 </head>
 <body>
 
+
+<button id="add-dinamic-content">Добавить динамический контент</button>
+
+
+<h3>В body</h3>
+
 <mathplus>
-    
-    [block]logx10 + (sqrt(x+1))/(x^2) + (sqrt(x+1))/(x^2)  больше или равно 0 [/block]
-
-    [m] x = {-b \pm \sqrt{b^2-4ac} \over 2a} + \frac{1}{2} [/m]
-
+        [block]x^2 + (sqrt(x+1))/(x^2) - 8*3 - Pi*Pi*phi*epsilon[/block]
 </mathplus>
+
+<h3>Внутри p</h3>
+
+
+<p>
+    <mathplus>
+        
+        [block]logx10 + (sqrt(x+1))/(x^2) + (sqrt(x+1))/(x^2)  больше или равно 0 [/block]
+
+        [m] x = {-b \pm \sqrt{b^2-4ac} \over 2a} + \frac{1}{2} * Pi [/m]
+
+    </mathplus>
+</p>
+
+
+<mathplus>[youtube=https://www.youtube.com/watch?v=v1PVGfK-7bA]</mathplus>
+
+<p>
+    <mathplus>
+        x^2 + (sqrt(x+1))/(x^2)
+    </mathplus>
+</p>
+
+<h3>Динамическая подгрузка внутрь div</h3>
+
+<div id="dinamic-content"></div>
+
+<h3>Динамическая подгрузка внутрь body</h3>
+
+
+<script>
+        
+    document.getElementById('add-dinamic-content').addEventListener('click', () => {
+        const el = document.getElementById('dinamic-content');
+        el.innerHTML = "<div><mathplus>x^2</mathplus></div>"
+    
+        const mathplus_el = document.createElement('mathplus');
+        mathplus_el.innerHTML = `sqrt(x) - [m] x [/m]`
+        document.body.appendChild(mathplus_el);
+    
+    })
+        
+</script>
 
 
 </body>

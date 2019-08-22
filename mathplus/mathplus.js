@@ -1,11 +1,19 @@
 class MathPlus{
 
+    //Текущий баг-лист
+
+    //1) MathJax не преобразует динамически появляемые элементы
+    //2) MathJax будет работать также и вне <mathplus>
+
     constructor(el){
 
-            this.include_mathjax("https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=default");
-            this.include_css();
-
             let text = el.innerHTML;
+
+            //Единожды подключаем Mathjax если им тут что-то обрабатывается.
+            if(!MathPlus.isMathjax && text.indexOf('[m]')!==-1 && text.indexOf('[/m]')!==-1){
+                MathPlus.isMathjax = true;
+                MathPlus.include_mathjax("https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=default");
+            }
 
             let characters_for_action = {
                 "/" : this.fraction.bind(this), //Красивыя дробь
@@ -13,15 +21,21 @@ class MathPlus{
                 "log" : this.log_base.bind(this), //Основание логарифма
                 "sqrt" : this.square_root.bind(this), //Квадратный корень
                 "_" : this.subscript.bind(this), //Нижний индекс
-                "[b]" : this.replacingMyTags.bind(this, "[b]", "[/b]", "<b>", "</b>"),
-                "[r]" : this.replacingMyTags.bind(this, "[r]", "[/r]", "<div class=ramka>", "</div>"),
-                "[m]" : this.replacingMyTags.bind(this, "[m]", "[/m]", "[nomath][m]", "[/m][/nomath]"),
-                "[link=" : this.replacingMyTags.bind(this, "[link=", "]", "<a href=", ">ссылка</a>"),
-                "[img=" : this.replacingMyTags.bind(this, "[img=", "]", "<img src='", "'>"),
-                "vector{" : this.replacingMyTags.bind(this, "vector{", "}", "<span class=vector>", "</span>"),
-                "system{" : this.replacingMyTags.bind(this, "system{", "}", "", ""),
-                "[youtube=" : this.replacingMyTags.bind(this, "[youtube=", "]", "<iframe src='", "'>"),
-                "[nomath]" : this.replacingMyTags.bind(this, "[nomath]", "[/nomath]", "", "")
+                "[b]" : this.replacingMyTags.bind(this, "[b]", "[/b]", "<b>", "</b>"), //Жирный текст
+                "[r]" : this.replacingMyTags.bind(this, "[r]", "[/r]", "<div class=ramka>", "</div>"), //Рамка
+                "[m]" : this.replacingMyTags.bind(this, "[m]", "[/m]", "[nomath][m]", "[/m][/nomath]"), //Преобразования с помощью MathJax.js (хак всего-лишь отключает действия нашего скрипта в этой области)
+                "[link=" : this.replacingMyTags.bind(this, "[link=", "]", "<a href=", ">ссылка</a>"), //Ссылка
+                "[img=" : this.replacingMyTags.bind(this, "[img=", "]", "<img src='", "'>"), //Изображение
+                "vector{" : this.replacingMyTags.bind(this, "vector{", "}", "<span class=vector>", "</span>"), //Вектор
+                "system{" : this.replacingMyTags.bind(this, "system{", "}", "", ""), //Система уравнений
+                "[youtube=" : this.replacingMyTags.bind(this, "[youtube=", "]", "<iframe src='", "'>"), //Видео на ютуб
+                "[nomath]" : this.replacingMyTags.bind(this, "[nomath]", "[/nomath]", "", ""), //Без математики
+                "-": this.replaceMySubsting.bind(this, "-", "&ndash;"),
+                "Pi": this.replaceMySubsting.bind(this, "Pi", "&pi;"),
+                "больше или равно": this.replaceMySubsting.bind(this, "больше или равно", "&ge;"),
+                "меньше или равно": this.replaceMySubsting.bind(this, "меньше или равно", "&le;"),
+                "smaller": this.replaceMySubsting.bind(this, "smaller", "&lt;"),
+                "*": this.replaceMySubsting.bind(this, "*", "&middot;"),
             };
 
             //Получаем массив ключей characters_for_action
@@ -63,25 +77,32 @@ class MathPlus{
                 }   
             }
 
+            /* ВАЖНО!!! */
+
+            //split - преобразует Все встречаемое в текста автоматически, не взирая на [nomath]
+            //поэтому, если такая замена может повредить работоспособности - её необходимо перенести
+            //в replaceMySubsting
+
             //Взято из старой версии mathscr без изменений
-            //text = text.split("-").join("&ndash;");
+
+            //text = text.split("-").join("&ndash;"); //Может повредить ссылкам
             text = text.split("плюс/минус").join("&plusmn;");
-            text = text.split("больше или равно").join("&ge;");
-            text = text.split("меньше или равно").join("&le;");
-            text = text.split("smaller").join("<");
+            //text = text.split("больше или равно").join("&ge;");
+            //text = text.split("меньше или равно").join("&le;");
+            //text = text.split("smaller").join("<");
             text = text.split("бесконечность").join("&infin;");
             text = text.split("градусов").join("&deg;");
             text = text.split("градус").join("&deg;");
             text = text.split("Цельсия").join("C");
-            text = text.split("Pi").join("&pi;");
+            //text = text.split("Pi").join("&pi;");
             text = text.split("альфа").join("&alpha;");
             text = text.split("бета").join("&beta;");
             text = text.split("гамма").join("&gamma;");
-            text = text.split("*").join("&middot;");
-            text = text.split("phi").join("&phi;");
+            //text = text.split("*").join("&middot;");
+            //text = text.split("phi").join("&phi;");
             text = text.split("лямбда").join("&lambda;");
             text = text.split("ТЕТА").join("&theta;");
-            text = text.split("epsilon").join("&epsilon;");
+            //text = text.split("epsilon").join("&epsilon;");
 
             text = text.split("[block]").join("");
             text = text.split("[/block]").join("");
@@ -90,7 +111,7 @@ class MathPlus{
 
     }
 
-    include_mathjax() {
+    static include_mathjax() {
         let script = document.createElement('script');
         script.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=default";
         document.getElementsByTagName('head')[0].appendChild(script);
@@ -100,7 +121,7 @@ class MathPlus{
         document.getElementsByTagName('head')[0].appendChild(script_config);
     }
 
-    include_css(){
+    static include_css(){
         let style = document.createElement('style');
         style.type = "text/css";
         //link.href = "mathplus/mathplus.css";
@@ -138,8 +159,6 @@ class MathPlus{
                     }
 
                 } 
-                
-                console.log("работаю")
 
             }
 
@@ -289,6 +308,13 @@ class MathPlus{
 
         }
        
+
+        return text;
+    }
+
+    replaceMySubsting(from, to, text, i){
+
+        text = text.substring(0, i-from.length)+to+text.substring(i, text.length);
 
         return text;
     }
@@ -477,6 +503,10 @@ class MathPlus{
 
 
 }
+
+MathPlus.include_css();
+
+MathPlus.isMathjax = false;
 
 
 (function(){
