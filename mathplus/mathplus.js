@@ -25,7 +25,7 @@ class MathPlus{
                 "[r]" : this.replacingMyTags.bind(this, "[r]", "[/r]", "<div class=ramka>", "</div>"), //Рамка
                 "[m]" : this.replacingMyTags.bind(this, "[m]", "[/m]", "[nomath][m]", "[/m][/nomath]"), //Преобразования с помощью MathJax.js (хак всего-лишь отключает действия нашего скрипта в этой области)
                 "[link=" : this.replacingMyTags.bind(this, "[link=", "]", "<a href=", ">ссылка</a>"), //Ссылка
-                "[img=" : this.replacingMyTags.bind(this, "[img=", "]", "<img src='", "'>"), //Изображение
+                //"[img=" : this.replacingMyTags.bind(this, "[img=", "]", "<img src='", "'>"), //Изображение
                 "vector{" : this.replacingMyTags.bind(this, "vector{", "}", "<span class=vector>", "</span>"), //Вектор
                 "system{" : this.replacingMyTags.bind(this, "system{", "}", "", ""), //Система уравнений
                 "[youtube=" : this.replacingMyTags.bind(this, "[youtube=", "]", "<iframe src='", "'>"), //Видео на ютуб
@@ -92,7 +92,7 @@ class MathPlus{
             //text = text.split("smaller").join("<");
             text = text.split("бесконечность").join("&infin;");
             text = text.split("градусов").join("&deg;");
-            text = text.split("градус").join("&deg;");
+            //text = text.split("градус").join("&deg;");
             text = text.split("Цельсия").join("C");
             //text = text.split("Pi").join("&pi;");
             text = text.split("альфа").join("&alpha;");
