@@ -2,18 +2,29 @@ class MathPlus{
 
     //Текущий баг-лист
 
-    //1) MathJax не преобразует динамически появляемые элементы
     //2) MathJax будет работать также и вне <mathplus>
 
     constructor(el){
 
             let text = el.innerHTML;
 
+            if(MathPlus.isMathjax && text.indexOf('[m]')!==-1 && text.indexOf('[/m]')!==-1){
+                //По непонятное мне причине для динамечески подгружаемых элементов может потребоваться
+                //2 раза вызывать Queue
+                
+                
+                console.log('Динамическое преобразование', el);
+                MathJax.Hub.Queue(["Typeset", MathJax.Hub, el]);
+                MathJax.Hub.Queue(["Typeset", MathJax.Hub, el]);
+            }
+
             //Единожды подключаем Mathjax если им тут что-то обрабатывается.
             if(!MathPlus.isMathjax && text.indexOf('[m]')!==-1 && text.indexOf('[/m]')!==-1){
                 MathPlus.isMathjax = true;
                 MathPlus.include_mathjax("https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=default");
             }
+
+
 
             let characters_for_action = {
                 "/" : this.fraction.bind(this), //Красивыя дробь
@@ -22,6 +33,11 @@ class MathPlus{
                 "sqrt" : this.square_root.bind(this), //Квадратный корень
                 "_" : this.subscript.bind(this), //Нижний индекс
                 "[b]" : this.replacingMyTags.bind(this, "[b]", "[/b]", "<b>", "</b>"), //Жирный текст
+                "[i]" : this.replacingMyTags.bind(this, "[i]", "[/i]", "<i>", "</i>"),
+                "[u]" : this.replacingMyTags.bind(this, "[u]", "[/u]", "<u>", "</u>"),
+                "[blue]" : this.replacingMyTags.bind(this, "[blue]", "[/blue]", "<span style='color:#6672B3'>", "</span>"),
+                "[green]" : this.replacingMyTags.bind(this, "[green]", "[/green]", "<span style='color:#70E0AC'>", "</span>"),
+                "[red]" : this.replacingMyTags.bind(this, "[red]", "[/red]", "<span style='color:#C65555'>", "</span>"),
                 "[r]" : this.replacingMyTags.bind(this, "[r]", "[/r]", "<div class=ramka>", "</div>"), //Рамка
                 "[m]" : this.replacingMyTags.bind(this, "[m]", "[/m]", "[nomath][m]", "[/m][/nomath]"), //Преобразования с помощью MathJax.js (хак всего-лишь отключает действия нашего скрипта в этой области)
                 "[link=" : this.replacingMyTags.bind(this, "[link=", "]", "<a href=", ">ссылка</a>"), //Ссылка
@@ -48,13 +64,24 @@ class MathPlus{
 
             //Прокручиваем строку посимвольно и ищем вхождения из characters_for_action
             //Если находим выполняем соответсвующую функцию
-            for (let i = 0; i < text.length; i++) {
+            for (let i = 0; i <= text.length; i++) {
 
                 for(let len of keys_length){
 
                     let substring_to_check = text.substring(i-len, i);
+
+                    //console.log('Ищу в: ', '['+substring_to_check+']');
                     
                     if(substring_to_check in characters_for_action){
+
+                        // console.log('//////////////'); 
+
+                        // console.log('Текст до замены: ', '['+text+']');
+                        // console.log('Длина до замены: ', text.length);
+                        // console.log('Номер просматриваемого символа: ', i);
+                        // console.log('Символ до: ', text[i-1]);
+                        // console.log('Символ текущий: ', text[i]);
+                        // console.log('Символ после: ', text[i+1]);
 
                         let res = characters_for_action[substring_to_check](text, i);
 
@@ -70,6 +97,14 @@ class MathPlus{
 
                         }
 
+                        // console.log('_______'); 
+                        
+                        // console.log('Текст после замены: ', '['+text+']');
+                        // console.log('Длина после замены: ', text.length);
+                        // console.log('Номер просматриваемого символа: ', i);
+                        // console.log('Символ до: ', text[i-1]);
+                        // console.log('Символ текущий: ', text[i]);
+                        // console.log('Символ после: ', text[i+1]);
                         
                         
                     }
@@ -109,6 +144,10 @@ class MathPlus{
 
             el.innerHTML = text
 
+                        
+
+
+
     }
 
     static include_mathjax() {
@@ -117,7 +156,7 @@ class MathPlus{
         document.getElementsByTagName('head')[0].appendChild(script);
         let script_config = document.createElement('script');
         script_config.type = "text/x-mathjax-config";
-        script_config.innerText = "MathJax.Hub.Config({tex2jax: {inlineMath: [['[m]','[/m]']],displayMath: []}});";
+        script_config.innerText = "MathJax.Hub.Config({tex2jax: {inlineMath: [['[m]','[/m]']],displayMath: []}});"
         document.getElementsByTagName('head')[0].appendChild(script_config);
     }
 
@@ -316,13 +355,14 @@ class MathPlus{
 
         text = text.substring(0, i-from.length)+to+text.substring(i, text.length);
 
-        return text;
+        return {text:text, i:i-from.length+to.length};
+
     }
 
     
     replacingMyTags(open_sym, close_sym, open_tag, close_tag, text, i){
         
-        
+
         let end = 0;
 
 
@@ -332,7 +372,7 @@ class MathPlus{
                 end = k;
 
                 if(open_sym==="[link="){
-
+                    
                     text = text.substring(0, i-open_sym.length) 
                         + "<a href='"
                         + "[nomath]" 
@@ -509,9 +549,17 @@ MathPlus.include_css();
 MathPlus.isMathjax = false;
 
 
-(function(){
-    let use_script = document.createElement('script');
-    use_script.src = "mathplus/mathplus_use.js";
-    use_script.setAttribute("defer", "");
-    document.getElementsByTagName('head')[0].appendChild(use_script);
-})();
+window.onload  = function(){
+ 
+	//Преобразовываем все элементы обернутые mathplus
+	[...document.getElementsByTagName("mathplus")].forEach((el) => new MathPlus(el));
+	
+	//Ставим прослушку на все динаимически появишиеся элементы mathplus
+    document.addEventListener('DOMNodeInserted', function(e) {
+		//Если появляется только mathplus
+		if(e.target.tagName === "MATHPLUS") new MathPlus(e.target); 
+		//Если появляется элемент содержащий в себе дочерние
+		if(e.target.childNodes.length) [...e.target.getElementsByTagName("mathplus")].forEach((el) => new MathPlus(el)); 
+    });
+
+}

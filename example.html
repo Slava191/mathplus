@@ -22,40 +22,20 @@
 <body>
 
 
+
+
+
 <button id="add-dinamic-content">Добавить динамический контент</button>
-
-
-<h3>В body</h3>
-
-<mathplus>
-        [block]x^2 + (sqrt(x+1))/(x^2) - 8*3 - Pi*Pi*phi*epsilon[/block]
-</mathplus>
 
 <h3>Внутри p</h3>
 
 
 <p>
     <mathplus>
-        
-        [block]logx10 + (sqrt(x+1))/(x^2) + (sqrt(x+1))/(x^2)  больше или равно 0 [/block]
-
-        [m] x = {-b \pm \sqrt{b^2-4ac} \over 2a} + \frac{1}{2} * Pi [/m]
-
+      [m]x^2[/m]  
     </mathplus>
 </p>
 
-
-<mathplus>[youtube=https://www.youtube.com/watch?v=v1PVGfK-7bA]</mathplus>
-
-<mathplus>[img=https://reshimvse.com/img/1566557193w.png]</mathplus>
-
-<mathplus>[link=ff]</mathplus>
-
-<p>
-    <mathplus>
-        x^2 + (sqrt(x+1))/(x^2)
-    </mathplus>
-</p>
 
 <h3>Динамическая подгрузка внутрь div</h3>
 
@@ -64,15 +44,22 @@
 <h3>Динамическая подгрузка внутрь body</h3>
 
 
+
 <script>
         
     document.getElementById('add-dinamic-content').addEventListener('click', () => {
         const el = document.getElementById('dinamic-content');
-        el.innerHTML = "<div><mathplus>x^2</mathplus></div>"
-    
+        //el.innerHTML = `<div><mathplus>[m] x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a} + \\frac{1}{2} [/m]</mathplus></div>`
+        //el.appendChild(el);
+
+        el.innerHTML = `<div><mathplus>x^2+[m]x^2[/m]</mathplus></div>`;
+
         const mathplus_el = document.createElement('mathplus');
-        mathplus_el.innerHTML = `sqrt(x) - [m] x [/m]`
+        mathplus_el.innerHTML = `sqrt(x)+[m]x^2[/m]`
         document.body.appendChild(mathplus_el);
+        el.appendChild(mathplus_el);
+
+       
     
     })
         
