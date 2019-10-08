@@ -1,10 +1,8 @@
 # MathPlus
 
-# It's not actual info! 26.06.2019
-
 ### About
 
-Transforms math expressions into a beautiful look.
+Wraps html text with tags based on simple commands. Support LaTeX (MathJax).
 
 ## Getting Started
 
@@ -12,19 +10,17 @@ Insert follow code between ```<head></head>```
 
 ```
 <script src="mathplus/mathplus.js"></script>
-<link rel="stylesheet" href="mathplus/mathplus.css">
-```
-
-
-Insert follow code before closing tag ```</body>```
-
-```
-<script src="mathplus/mathplus_use.js"></script> 
 ```
 
 The text that you wish to transform with MathPlus shod be located between ```<mathplus> ... </mathplus>``` tags
 
 ## How to use
+
+### For suply LaTeX
+
+```
+[m]\frac{x}{y} = \sqrt[3]{z}[/m]
+```
 
 ### Exponentiation
 
@@ -56,7 +52,7 @@ log(x) 10
 vector{x}
 ```
 
-### Fractions
+### Fractions (DEPRICATED)
 
 **!!! use the ```[block][/block]``` in the line where the fraction is placed**
 
@@ -64,7 +60,7 @@ vector{x}
 [block](a)/(b)+(c)/(b) = (a+c)/(b)[/block]
 ```
 
-### Systems of two equations
+### Systems of two equations (DEPRICATED)
 
 ```
 system{x+y = 2;x-y=0}
@@ -90,10 +86,20 @@ A link to the video can be taken directly from the browser line.
 [link=https://github.com/Slava191/mathplus]
 ```
 
-### Bold text
+### Bold, italic, unedrline text
 
 ```
 [b]Bold text[/b]
+[i]Italic text[/i]
+[u]Underline text[/u]
+```
+
+### Colored text
+
+```
+[red]Bold text[/red]
+[green]Italic text[/green]
+[blue]Underline text[/blue]
 ```
 
 ### Text in frame
