@@ -9,13 +9,17 @@ class MathPlus{
             let text = el.innerHTML;
 
             if(MathPlus.isMathjax && text.indexOf('[m]')!==-1 && text.indexOf('[/m]')!==-1){
-                //По непонятное мне причине для динамечески подгружаемых элементов может потребоваться
-                //2 раза вызывать Queue
-                
-                
-                console.log('Динамическое преобразование', el);
-                MathJax.Hub.Queue(["Typeset", MathJax.Hub, el]);
-                MathJax.Hub.Queue(["Typeset", MathJax.Hub, el]);
+				//По непонятное мне причине для динамечески подгружаемых элементов может потребоваться
+				//2 раза вызывать Queue
+				//Да и вообще..пологаю тут далеко не самое грамотное решение динамической подгрузки
+				//удивительно, что рабочее...
+				
+				try{
+					MathJax.Hub.Queue(["Typeset", MathJax.Hub, el]);
+					MathJax.Hub.Queue(["Typeset", MathJax.Hub, el]);
+				}catch(err){
+					console.log(err);
+				}
             }
 
             //Единожды подключаем Mathjax если им тут что-то обрабатывается.
