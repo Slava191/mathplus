@@ -559,11 +559,26 @@ window.onload  = function(){
 	[...document.getElementsByTagName("mathplus")].forEach((el) => new MathPlus(el));
 	
 	//Ставим прослушку на все динаимически появишиеся элементы mathplus
-    document.addEventListener('DOMNodeInserted', function(e) {
-		//Если появляется только mathplus
-		if(e.target.tagName === "MATHPLUS") new MathPlus(e.target); 
-		//Если появляется элемент содержащий в себе дочерние
-		if(e.target.childNodes.length) [...e.target.getElementsByTagName("mathplus")].forEach((el) => new MathPlus(el)); 
-    });
+    const observerMathPlus = new MutationObserver((mutationsList) => {
+        for (const mutation of mutationsList) {
+          if (mutation.type === 'childList') {
+            for (const node of mutation.addedNodes) {
+              if (node.nodeType === Node.ELEMENT_NODE) {
+                // Если появляется только mathplus
+                if (node.tagName === 'MATHPLUS') {
+                  new MathPlus(node);
+                }
+                // Если появляется элемент, содержащий в себе дочерние
+                if (node.childNodes.length) {
+                  [...node.getElementsByTagName('mathplus')].forEach((el) => new MathPlus(el));
+                }
+              }
+            }
+          }
+        }
+      });
+      
+      // Наблюдаем изменения в элементе document.body
+      observerMathPlus.observe(document.body, { childList: true, subtree: true });
 
 }
